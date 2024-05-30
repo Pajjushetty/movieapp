@@ -11,6 +11,10 @@ import MovieLists from './components/publicorprivate';
 import CreateList from './components/createList';
 import RemoveList from './components/RemoveList'; // Import RemoveList component
 
+
+
+const API_KEY = process.env.REACT_APP_OMDB_API_KEY;
+
 const App = () => {
 	const [movies, setMovies] = useState([]);
 	const [favourites, setFavourites] = useState([]);
@@ -21,7 +25,7 @@ const App = () => {
 	const [currentUser, setCurrentUser] = useState(null);
 
 	const getMovieRequest = async (searchValue) => {
-		const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=2386299`;
+		const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=${API_KEY}`;
 		const response = await fetch(url);
 		const responseJson = await response.json();
 		if (responseJson.Search) {
