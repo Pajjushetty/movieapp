@@ -22,7 +22,7 @@ const App = () => {
 	const [isRegistered, setIsRegistered] = useState(false);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [movieLists, setMovieLists] = useState([]);
-	const [currentUser, setCurrentUser] = useState(null);
+	const [currentUser] = useState(null);
 
 	const getMovieRequest = async (searchValue) => {
 		const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=${API_KEY}`;
