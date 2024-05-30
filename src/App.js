@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -9,9 +8,7 @@ import SearchBox from './components/SearchBox';
 import AddFavourites from './components/searchmovie';
 import MovieLists from './components/publicorprivate';
 import CreateList from './components/createList';
-import RemoveList from './components/RemoveList'; // Import RemoveList component
-
-
+import RemoveList from './components/RemoveList';
 
 const API_KEY = process.env.REACT_APP_OMDB_API_KEY;
 
@@ -24,12 +21,18 @@ const App = () => {
 	const [movieLists, setMovieLists] = useState([]);
 	const [currentUser] = useState(null);
 
+	console.log('OMDB API Key:', API_KEY); // Log to check if API key is being read
+
 	const getMovieRequest = async (searchValue) => {
-		const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=${API_KEY}`;
-		const response = await fetch(url);
-		const responseJson = await response.json();
-		if (responseJson.Search) {
-			setMovies(responseJson.Search);
+		const url = `https://www.omdbapi.com/?s=${searchValue}&apikey=${API_KEY}`;
+		try {
+			const response = await fetch(url);
+			const responseJson = await response.json();
+			if (responseJson.Search) {
+				setMovies(responseJson.Search);
+			}
+		} catch (error) {
+			console.error('Failed to fetch movies:', error);
 		}
 	};
 
@@ -58,8 +61,6 @@ const App = () => {
 		setFavourites(newFavouriteList);
 		saveToLocalStorage('react-movie-app-favourites', newFavouriteList);
 	};
-
-
 
 	const handleRegister = () => {
 		setIsRegistered(true);
@@ -104,7 +105,6 @@ const App = () => {
 	return (
 		<div className='container-fluid movie-app'>
 			<div className='row d-flex align-items-center mt-4 mb-4'>
-
 				<SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
 			</div>
 			<div className='row'>
@@ -115,7 +115,6 @@ const App = () => {
 				/>
 			</div>
 			<div className='row d-flex align-items-center mt-4 mb-4'>
-
 			</div>
 			<div className='row'>
 				<MovieLists movieLists={movieLists} addMovieToList={addMovieToList} movies={movies} />
@@ -131,7 +130,3 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
